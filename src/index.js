@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { NavLink, Route, BrowserRouter as Router} from 'react-router-dom'
 import './index.css';
 
 
@@ -24,16 +25,15 @@ class Board extends React.Component {
 
     handleClick(i) {
         const squares = this.state.squares.slice();
-        squares[i] = this.state.isXNext? 'X': 'O';
-        this.setState({ 
+        squares[i] = this.state.isXNext ? 'X' : 'O';
+        this.setState({
             squares: squares,
             isXNext: !this.state.isXNext
         });
     }
 
     render() {
-        const status = 'Next player: ' + (this.state.isXNext? 'X': 'O');
-
+        const status = 'Next player: ' + (this.state.isXNext ? 'X' : 'O');
         return (
             <div>
                 <div className="status">{status}</div>
@@ -57,17 +57,41 @@ class Board extends React.Component {
     }
 }
 
+class Home extends React.Component {
+    render() {
+        return (
+            <h2>home</h2>
+        )
+    }
+}
+
+class Name extends React.Component {
+    render() {
+        return (
+            <h2>name</h2>
+        )
+    }
+}
+
 class Game extends React.Component {
     render() {
         return (
             <div className="game">
-                <div className="game-board">
-                    <Board />
-                </div>
-                <div className="game-info">
-                    <div>{/* status */}</div>
-                    <ol>{/* TODO */}</ol>
-                </div>
+                <Router>
+                    <ul>
+                        <li><NavLink to='/home'>home</NavLink></li>
+                        <li><NavLink to='/name'>name</NavLink></li>
+                    </ul>
+                    <div className="game-board">
+                        <Board />
+                    </div>
+                    <div className="game-info">
+                        <div>{/* status */}</div>
+                        <ol>{/* TODO */}</ol>
+                        <Route path='/home' component={Home}></Route>
+                        <Route path='/name' component={Name}></Route>
+                    </div>
+                </Router>
             </div>
         );
     }
